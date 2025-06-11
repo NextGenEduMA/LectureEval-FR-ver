@@ -1,0 +1,25 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore virtual environments
+venv/
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore audio and media files
+/reference_audio/
+static/audio/
+
+# Ignore Jupyter notebooks checkpoints (if any)
+.ipynb_checkpoints/
+
+# Ignore VS Code settings (if you use VS Code)
+.vscode/
+
+# Ignore MLflow artifacts if you use it
+mlruns/

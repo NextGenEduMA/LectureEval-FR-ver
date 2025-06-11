@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LectureEval - Évaluation de Lecture pour les Élèves Marocains</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-book-reader"></i>
+                <span>LectureEval</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Évaluation de Lecture Interactive</h1>
+            </section>
+
+            <section id="evaluation" class="evaluation-section">
+                <h2><i class="fas fa-graduation-cap"></i> Configurez votre évaluation</h2>
+                <form id="evaluation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="level"><i class="fas fa-layer-group"></i> Niveau scolaire</label>
+                            <select id="level" class="form-control" required>
+                                <option value="1">1ère Année Primaire</option>
+                                <option value="2">2ème Année Primaire</option>
+                                <option value="3">3ème Année Primaire</option>
+                                <option value="4">4ème Année Primaire</option>
+                                <option value="5">5ème Année Primaire</option>
+                                <option value="6" selected>6ème Année Primaire</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="difficulty"><i class="fas fa-chart-line"></i> Niveau de difficulté</label>
+                            <select id="difficulty" class="form-control" required>
+                                <option value="easy">🟢 Facile</option>
+                                <option value="medium" selected>🟡 Moyen</option>
+                                <option value="hard">🔴 Difficile</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-display"><i class="fas fa-file-text"></i> Texte à lire</label>
+                        <div id="text-display" class="form-control">
+                            <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                                <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                <p>Cliquez sur "Charger un texte" pour commencer votre évaluation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="load-text-btn" class="btn btn-primary">
+                            <i class="fas fa-refresh"></i> Charger un nouveau texte
+                        </button>
+                        <div class="tts-controls">
+                            <button type="button" id="tts-btn" class="btn btn-outline" disabled>
+                                <i class="fas fa-volume-up"></i> Écouter le texte
+                            </button>
+                            <span id="tts-counter" class="usage-counter" style="display: none;">
+                                <i class="fas fa-headphones"></i> <span id="tts-count">0</span>/3
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="audio-controls">
+                        <h3><i class="fas fa-microphone"></i> Enregistrement vocal</h3>
+                        <p class="audio-status">Cliquez sur le bouton rouge pour commencer l'enregistrement</p>
+                        
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem 0;">
+                            <button type="button" id="record-btn" class="record-btn">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <span id="record-counter" class="usage-counter" style="display: none;">
+                                <i class="fas fa-record-vinyl"></i> <span id="record-count">0</span>/3
+                            </span>
+                        </div>
+                        
+                        <audio id="audio-playback" controls style="display: none;"></audio>
+                        <audio id="word-audio"></audio>
+                        <audio id="tts-audio"></audio>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="button" id="evaluate-btn" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;" disabled>
+                            <i class="fas fa-analytics"></i> Lancer l'évaluation
+                        </button>
+                    </div>
+
+                    <div id="results-container" class="results-container">
+                        <h3><i class="fas fa-chart-bar"></i> Résultats de votre évaluation</h3>
+                        <div class="score-grid">
+                            <div class="score-card">
+                                <span class="score-label">Prononciation</span>
+                                <span id="pronunciation-score" class="score-value">0/100</span>
+                            </div>
+                            <div class="score-card">
+                                <span class="score-label">Vitesse de lecture</span>
+                                <span id="reading-speed" class="score-value">0 mots/min</span>
+                            </div>
+                            <div class="score-card">
+                                <span class="score-label">Compréhension</span>
+                                <span id="comprehension-score" class="score-value">0/100</span>
+                            </div>
+                            <div class="score-card">
+                                <span class="score-label">Score global</span>
+                                <span id="overall-score" class="score-value">0/100</span>
+                            </div>
+                        </div>
+                        <div id="feedback-container" class="feedback-container">
+                            <h4><i class="fas fa-comments"></i> Commentaires personnalisés:</h4>
+                            <div id="general-feedback"></div>
+                            <h4><i class="fas fa-exclamation-circle"></i> Détails des erreurs:</h4>
+                            <div id="error-details">
+                                <p><strong>Mots supplémentaires:</strong> <span id="extra-words">Aucun</span></p>
+                                <p><strong>Mots manquants:</strong> <span id="missed-words">Aucun</span></p>
+                                <p><strong>Erreurs de prononciation:</strong> <span id="pronunciation-errors">Aucune</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2025 LectureEval - Plateforme d'évaluation de lecture pour les élèves marocains</p>
+            <div class="social-links">
+                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const levelSelect = document.getElementById('level');
+            const difficultySelect = document.getElementById('difficulty');
+            const textDisplay = document.getElementById('text-display');
+            const loadTextBtn = document.getElementById('load-text-btn');
+            const ttsBtn = document.getElementById('tts-btn');
+            const recordBtn = document.getElementById('record-btn');
+            const audioPlayback = document.getElementById('audio-playback');
+            const evaluateBtn = document.getElementById('evaluate-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const audioStatus = document.querySelector('.audio-status');
+            const wordAudio = document.getElementById('word-audio');
+            const ttsAudio = document.getElementById('tts-audio');
+            const ttsCounter = document.getElementById('tts-counter');
+            const ttsCount = document.getElementById('tts-count');
+            const recordCounter = document.getElementById('record-counter');
+            const recordCount = document.getElementById('record-count');
+
+            let currentText = null;
+            let mediaRecorder = null;
+            let audioChunks = [];
+            let isRecording = false;
+            let audioBlob = null;
+            let isSpeaking = false;
+            let audioCache = {};
+            
+            // Usage counters
+            let ttsUsageCount = 0;
+            let recordUsageCount = 0;
+            const maxUsage = 3;
+
+            // TTS Audio control
+            let currentTTSAudio = null;
+
+            loadTextBtn.addEventListener('click', function() {
+                const level = levelSelect.value;
+                const difficulty = difficultySelect.value;
+
+                // Reset counters when loading new text
+                ttsUsageCount = 0;
+                recordUsageCount = 0;
+                updateCounterDisplays();
+
+                textDisplay.innerHTML = '<div style="text-align: center; padding: 2rem;"><div class="loading"></div><p style="margin-top: 1rem;">Chargement du texte...</p></div>';
+
+                fetch(`/get_random_text?language=fr&level=${level}&difficulty=${difficulty}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            currentText = data.text;
+                            displayText(currentText.content);
+                            audioPlayback.style.display = 'none';
+                            audioBlob = null;
+                            evaluateBtn.disabled = true;
+                            resultsContainer.style.display = 'none';
+                            audioStatus.textContent = 'Cliquez sur le bouton rouge pour commencer l\'enregistrement';
+                            ttsBtn.disabled = false;
+                            stopSpeaking();
+                        } else {
+                            textDisplay.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--error-color);"><i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Erreur: ${data.message}</p></div>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching text:', error);
+                        textDisplay.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--error-color);"><i class="fas fa-wifi" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Erreur de connexion. Veuillez réessayer.</p></div>';
+                    });
+            });
+
+            function displayText(text) {
+                const words = text.split(/\s+/);
+                textDisplay.innerHTML = words.map(word => 
+                    `<span class="word" data-word="${word}" title="Cliquez pour écouter la prononciation">${word}</span>`
+                ).join(' ');
+                
+                document.querySelectorAll('.word').forEach(span => {
+                    span.addEventListener('click', () => playWordPronunciation(span.dataset.word));
+                });
+            }
+
+            function playWordPronunciation(word) {
+                if (audioCache[word]) {
+                    wordAudio.src = audioCache[word];
+                    wordAudio.play();
+                    return;
+                }
+                
+                fetch('/text-to-speech', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: word, language: 'fr' })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        audioCache[word] = data.audio_url;
+                        wordAudio.src = data.audio_url;
+                        wordAudio.play();
+                    } else {
+                        alert('Erreur lors de la génération de la prononciation: ' + data.message);
+                    }
+                })
+                .catch(err => alert('Erreur lors de la génération de la prononciation: ' + err.message));
+            }
+
+            function updateCounterDisplays() {
+                // Update TTS counter
+                ttsCount.textContent = ttsUsageCount;
+                ttsCounter.style.display = ttsUsageCount > 0 ? 'inline-flex' : 'none';
+                
+                if (ttsUsageCount >= maxUsage) {
+                    ttsBtn.disabled = true;
+                    ttsBtn.innerHTML = '<i class="fas fa-volume-off"></i> Limite atteinte';
+                }
+
+                // Update record counter
+                recordCount.textContent = recordUsageCount;
+                recordCounter.style.display = recordUsageCount > 0 ? 'inline-flex' : 'none';
+                
+                if (recordUsageCount >= maxUsage) {
+                    recordBtn.disabled = true;
+                    recordBtn.innerHTML = '<i class="fas fa-ban"></i>';
+                    audioStatus.textContent = 'Limite d\'enregistrement atteinte (3/3)';
+                }
+            }
+
+            ttsBtn.addEventListener('click', function() {
+                if (!currentText) {
+                    alert('Veuillez d\'abord charger un texte.');
+                    return;
+                }
+
+                if (ttsUsageCount >= maxUsage) {
+                    alert('Vous avez atteint la limite d\'écoute (3 fois maximum).');
+                    return;
+                }
+
+                if (isSpeaking) {
+                    stopSpeaking();
+                } else {
+                    startSpeaking(currentText.content, 'fr');
+                }
+            });
+
+            function startSpeaking(text, language) {
+                if (ttsUsageCount >= maxUsage) return;
+
+                isSpeaking = true;
+                ttsBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                ttsBtn.classList.add('playing');
+                audioStatus.textContent = 'Lecture du texte en cours... (Cliquez sur Pause pour arrêter)';
+
+                fetch('/text-to-speech', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        language: language
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        currentTTSAudio = new Audio(data.audio_url);
+                        
+                        currentTTSAudio.onended = () => {
+                            stopSpeaking();
+                            ttsUsageCount++;
+                            updateCounterDisplays();
+                        };
+                        
+                        currentTTSAudio.onerror = () => {
+                            console.error('Error playing audio');
+                            stopSpeaking();
+                        };
+                        
+                        currentTTSAudio.play();
+                    } else {
+                        audioStatus.textContent = 'Erreur lors de la synthèse vocale.';
+                        stopSpeaking();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error calling TTS API:', error);
+                    audioStatus.textContent = 'Erreur lors de la synthèse vocale.';
+                    stopSpeaking();
+                });
+            }
+
+            function stopSpeaking() {
+                if (currentTTSAudio) {
+                    currentTTSAudio.pause();
+                    currentTTSAudio.currentTime = 0;
+                }
+                
+                isSpeaking = false;
+                ttsBtn.innerHTML = '<i class="fas fa-volume-up"></i> Écouter le texte';
+                ttsBtn.classList.remove('playing');
+                audioStatus.textContent = 'Cliquez sur le bouton rouge pour commencer l\'enregistrement';
+            }
+
+            recordBtn.addEventListener('click', function() {
+                if (!currentText) {
+                    alert('Veuillez d\'abord charger un texte.');
+                    return;
+                }
+
+                if (recordUsageCount >= maxUsage) {
+                    alert('Vous avez atteint la limite d\'enregistrement (3 fois maximum).');
+                    return;
+                }
+
+                if (isSpeaking) {
+                    stopSpeaking();
+                }
+
+                if (isRecording) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            });
+
+            function startRecording() {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        audioChunks = [];
+                        let options = {};
+                        if (MediaRecorder.isTypeSupported('audio/webm')) {
+                            options = { mimeType: 'audio/webm' };
+                        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                            options = { mimeType: 'audio/mp4' };
+                        }
+
+                        mediaRecorder = new MediaRecorder(stream, options);
+
+                        mediaRecorder.addEventListener('dataavailable', event => {
+                            audioChunks.push(event.data);
+                        });
+
+                        mediaRecorder.addEventListener('stop', () => {
+                            const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                            audioBlob = new Blob(audioChunks, { type: mimeType });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            audioPlayback.src = audioUrl;
+                            audioPlayback.style.display = 'block';
+                            evaluateBtn.disabled = false;
+                            isRecording = false;
+                            recordBtn.classList.remove('recording');
+                            recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                            audioStatus.textContent = 'Enregistrement terminé! Vous pouvez l\'écouter et lancer l\'évaluation.';
+                            
+                            // Increment usage count
+                            recordUsageCount++;
+                            updateCounterDisplays();
+                            
+                            // Stop recording after 15 seconds
+                            setTimeout(() => {
+                                if (isRecording) {
+                                    stopRecording();
+                                    audioStatus.textContent = 'Enregistrement arrêté (limite de 15s atteinte).';
+                                }
+                            }, 15000);
+                        });
+
+                        mediaRecorder.start();
+                        isRecording = true;
+                        recordBtn.classList.add('recording');
+                        recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                        audioStatus.textContent = 'Enregistrement en cours... Cliquez sur STOP pour terminer.';
+                    })
+                    .catch(error => {
+                        console.error('Error accessing microphone:', error);
+                        alert('Erreur lors de l\'accès au microphone. Veuillez vérifier les permissions.');
+                    });
+            }
+
+            function stopRecording() {
+                if (mediaRecorder && isRecording) {
+                    mediaRecorder.stop();
+                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                }
+            }
+
+            evaluateBtn.addEventListener('click', function() {
+                if (!audioBlob || !currentText) {
+                    alert('Veuillez enregistrer votre lecture avant d\'évaluer.');
+                    return;
+                }
+
+                evaluateBtn.disabled = true;
+                evaluateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse en cours...';
+
+                const formData = new FormData();
+                let fileExtension = 'webm';
+                if (audioBlob.type.includes('mp4')) {
+                    fileExtension = 'mp4';
+                }
+                formData.append('file', audioBlob, `recording.${fileExtension}`);
+                formData.append('reference_text', currentText.content);
+                formData.append('text_id', currentText.text_id);
+                formData.append('language', 'fr');
+                formData.append('level', currentText.level);
+                formData.append('difficulty', currentText.difficulty);
+
+                fetch('/evaluate', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Animate score display
+                        setTimeout(() => {
+                            document.getElementById('pronunciation-score').textContent = data.evaluation.pronunciation_accuracy + '/100';
+                            document.getElementById('reading-speed').textContent = data.words_per_minute + ' mots/min (' + data.evaluation.reading_speed + ')';
+                            document.getElementById('comprehension-score').textContent = data.evaluation.comprehension + '/100';
+                            document.getElementById('overall-score').textContent = data.evaluation.score + '/100';
+
+                            const feedbackContainer = document.getElementById('general-feedback');
+                            let feedback = '';
+                            if (data.llm_details.pronunciation.feedback) {
+                                feedback += data.llm_details.pronunciation.feedback + '<br>';
+                            }
+                            if (data.llm_details.comprehension.feedback) {
+                                feedback += data.llm_details.comprehension.feedback;
+                            }
+                            feedbackContainer.innerHTML = `<p>${feedback || 'Aucun commentaire disponible'}</p>`;
+
+                            // Display error details
+                            const extraWords = document.getElementById('extra-words');
+                            const missedWords = document.getElementById('missed-words');
+                            const pronunciationErrors = document.getElementById('pronunciation-errors');
+
+                            extraWords.textContent = data.wer_details.extra_words.length > 0 ? data.wer_details.extra_words.join(', ') : 'Aucun';
+                            missedWords.textContent = data.wer_details.missed_words.length > 0 ? data.wer_details.missed_words.join(', ') : 'Aucun';
+                            pronunciationErrors.textContent = data.llm_details.pronunciation.errors.length > 0 ? data.llm_details.pronunciation.errors.join('; ') : 'Aucune';
+
+                            resultsContainer.style.display = 'block';
+                            
+                            // Smooth scroll to results
+                            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 500);
+                    } else {
+                        alert('Erreur lors de l\'évaluation: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error evaluating:', error);
+                    alert('Erreur lors de l\'évaluation. Veuillez réessayer.');
+                })
+                .finally(() => {
+                    evaluateBtn.disabled = false;
+                    evaluateBtn.innerHTML = '<i class="fas fa-analytics"></i> Lancer l\'évaluation';
+                });
+            });
+
+            // Initialize counter displays
+            updateCounterDisplays();
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
+                    e.preventDefault();
+                    if (currentText && !isRecording) {
+                        if (isSpeaking) {
+                            stopSpeaking();
+                        } else if (ttsUsageCount < maxUsage) {
+                            startSpeaking(currentText.content, 'fr');
+                        }
+                    }
+                }
+                
+                if (e.key === 'r' && e.ctrlKey && currentText && recordUsageCount < maxUsage) {
+                    e.preventDefault();
+                    if (isRecording) {
+                        stopRecording();
+                    } else {
+                        startRecording();
+                    }
+                }
+            });
+
+            // Add tooltip for keyboard shortcuts
+            const shortcutsInfo = document.createElement('div');
+            shortcutsInfo.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                z-index: 1000;
+                display: none;
+            `;
+            shortcutsInfo.innerHTML = `
+                <strong>Raccourcis clavier:</strong><br>
+                <kbd>Espace</kbd> - Lecture/Pause<br>
+                <kbd>Ctrl+R</kbd> - Enregistrement
+            `;
+            document.body.appendChild(shortcutsInfo);
+
+            // Show shortcuts info on first load
+            setTimeout(() => {
+                shortcutsInfo.style.display = 'block';
+                setTimeout(() => {
+                    shortcutsInfo.style.display = 'none';
+                }, 5000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

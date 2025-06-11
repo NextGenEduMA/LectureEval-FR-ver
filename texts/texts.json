@@ -1,0 +1,380 @@
+[
+    {
+        "id": "fr1",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "easy",
+        "content": "Le soleil brille dans le ciel."
+    },
+    {
+        "id": "fr2",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "easy",
+        "content": "Le chat joue avec une balle."
+    },
+    {
+        "id": "fr3",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "easy",
+        "content": "L’oiseau vole près de l’arbre."
+    },
+    {
+        "id": "fr4",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "medium",
+        "content": "Le chien court dans le jardin."
+    },
+    {
+        "id": "fr5",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "medium",
+        "content": "La fleur rouge pousse dans le pot."
+    },
+    {
+        "id": "fr6",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "medium",
+        "content": "Le garçon mange une pomme."
+    },
+    {
+        "id": "fr7",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "hard",
+        "content": "Le petit poisson nage dans l’eau claire."
+    },
+    {
+        "id": "fr8",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "hard",
+        "content": "La maison blanche a un grand toit."
+    },
+    {
+        "id": "fr9",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "hard",
+        "content": "Le vent souffle doucement sur la plage."
+    },
+    {
+        "id": "fr10",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "easy",
+        "content": "Les enfants jouent dans le parc."
+    },
+    {
+        "id": "fr11",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "easy",
+        "content": "Le chien aboie près de la porte."
+    },
+    {
+        "id": "fr12",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "easy",
+        "content": "La lune éclaire la nuit."
+    },
+    {
+        "id": "fr13",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "medium",
+        "content": "Le marché de Marrakech est coloré."
+    },
+    {
+        "id": "fr14",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "medium",
+        "content": "La fille dessine un beau soleil."
+    },
+    {
+        "id": "fr15",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "medium",
+        "content": "Le cheval galope dans le champ."
+    },
+    {
+        "id": "fr16",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Les vagues frappent les rochers de la côte."
+    },
+    {
+        "id": "fr17",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Le marchand vend des épices au souk."
+    },
+    {
+        "id": "fr18",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "hard",
+        "content": "La vieille médina est pleine de secrets."
+    },
+    {
+        "id": "fr19",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "easy",
+        "content": "Le garçon lit un livre intéressant."
+    },
+    {
+        "id": "fr20",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "easy",
+        "content": "Les étoiles brillent dans le ciel."
+    },
+    {
+        "id": "fr21",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "easy",
+        "content": "Le chat grimpe sur le mur."
+    },
+    {
+        "id": "fr22",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "medium",
+        "content": "Les palmiers se dressent dans le désert."
+    },
+    {
+        "id": "fr23",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "medium",
+        "content": "La famille mange un tajine délicieux."
+    },
+    {
+        "id": "fr24",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "medium",
+        "content": "L’enfant écrit une lettre à son ami."
+    },
+    {
+        "id": "fr25",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "hard",
+        "content": "Le dromadaire marche lentement dans le Sahara."
+    },
+    {
+        "id": "fr26",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "hard",
+        "content": "La place Jemaa el-Fna est très animée."
+    },
+    {
+        "id": "fr27",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "hard",
+        "content": "Les artisans fabriquent des tapis colorés."
+    },
+    {
+        "id": "fr28",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "easy",
+        "content": "L’école organise une sortie au parc."
+    },
+    {
+        "id": "fr29",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "easy",
+        "content": "Le garçon joue au football avec ses amis."
+    },
+    {
+        "id": "fr30",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "easy",
+        "content": "La rivière coule doucement près du village."
+    },
+    {
+        "id": "fr31",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Les montagnes de l’Atlas sont magnifiques."
+    },
+    {
+        "id": "fr32",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "medium",
+        "content": "La fille apprend à jouer du luth."
+    },
+    {
+        "id": "fr33",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Le marché vend des fruits frais."
+    },
+    {
+        "id": "fr34",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Les traditions marocaines sont riches et variées."
+    },
+    {
+        "id": "fr35",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Le festival de Fès célèbre la musique sacrée."
+    },
+    {
+        "id": "fr36",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Les kasbahs du sud sont des trésors historiques."
+    },
+    {
+        "id": "fr37",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "easy",
+        "content": "Les enfants visitent un musée local."
+    },
+    {
+        "id": "fr38",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "easy",
+        "content": "Le vent souffle fort dans les dunes."
+    },
+    {
+        "id": "fr39",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "easy",
+        "content": "La fille lit une histoire drôle."
+    },
+    {
+        "id": "fr40",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "medium",
+        "content": "Le Maroc est connu pour ses souks animés."
+    },
+    {
+        "id": "fr41",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "medium",
+        "content": "Les élèves étudient l’histoire du Maroc."
+    },
+    {
+        "id": "fr42",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "medium",
+        "content": "La médina de Rabat est très ancienne."
+    },
+    {
+        "id": "fr43",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "hard",
+        "content": "Les manuscrits anciens racontent des histoires fascinantes."
+    },
+    {
+        "id": "fr44",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "hard",
+        "content": "Les jardins de la Ménara sont un lieu de paix."
+    },
+    {
+        "id": "fr45",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "hard",
+        "content": "La culture marocaine mêle tradition et modernité."
+    },
+    {
+        "id": "fr46",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "easy",
+        "content": "Les élèves préparent un spectacle à l’école."
+    },
+    {
+        "id": "fr47",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "easy",
+        "content": "Le garçon regarde les étoiles la nuit."
+    },
+    {
+        "id": "fr48",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "easy",
+        "content": "La plage d’Agadir est très belle."
+    },
+    {
+        "id": "fr49",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Les artisans de Fès créent des poteries uniques."
+    },
+    {
+        "id": "fr50",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Le Maroc célèbre ses fêtes avec joie."
+    },
+    {
+        "id": "fr51",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Les enfants apprennent les danses traditionnelles."
+    },
+    {
+        "id": "fr52",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "La bibliothèque municipale conserve des livres précieux."
+    },
+    {
+        "id": "fr53",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "Les dynasties marocaines ont laissé un héritage culturel."
+    },
+    {
+        "id": "fr54",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "Les contes amazighs inspirent les jeunes générations."
+    }
+]
