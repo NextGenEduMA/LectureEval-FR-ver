@@ -4,377 +4,559 @@
         "language": "fr",
         "level": "1",
         "difficulty": "easy",
-        "content": "Le soleil brille dans le ciel."
+        "content": "Le chat dort."
     },
     {
         "id": "fr2",
         "language": "fr",
         "level": "1",
         "difficulty": "easy",
-        "content": "Le chat joue avec une balle."
+        "content": "Il fait beau."
     },
     {
         "id": "fr3",
         "language": "fr",
         "level": "1",
         "difficulty": "easy",
-        "content": "L’oiseau vole près de l’arbre."
+        "content": "Je mange une pomme."
     },
     {
         "id": "fr4",
         "language": "fr",
         "level": "1",
-        "difficulty": "medium",
-        "content": "Le chien court dans le jardin."
+        "difficulty": "easy",
+        "content": "La maison est rouge."
     },
     {
         "id": "fr5",
         "language": "fr",
         "level": "1",
-        "difficulty": "medium",
-        "content": "La fleur rouge pousse dans le pot."
+        "difficulty": "easy",
+        "content": "Tu as un chien."
     },
     {
         "id": "fr6",
         "language": "fr",
         "level": "1",
         "difficulty": "medium",
-        "content": "Le garçon mange une pomme."
+        "content": "Le soleil brille dans le ciel."
     },
     {
         "id": "fr7",
         "language": "fr",
         "level": "1",
-        "difficulty": "hard",
-        "content": "Le petit poisson nage dans l’eau claire."
+        "difficulty": "medium",
+        "content": "Elle lit un livre rouge."
     },
     {
         "id": "fr8",
         "language": "fr",
         "level": "1",
-        "difficulty": "hard",
-        "content": "La maison blanche a un grand toit."
+        "difficulty": "medium",
+        "content": "Mon frère joue au football."
     },
     {
         "id": "fr9",
         "language": "fr",
         "level": "1",
-        "difficulty": "hard",
-        "content": "Le vent souffle doucement sur la plage."
+        "difficulty": "medium",
+        "content": "Nous allons à l'école."
     },
     {
         "id": "fr10",
         "language": "fr",
-        "level": "2",
-        "difficulty": "easy",
-        "content": "Les enfants jouent dans le parc."
+        "level": "1",
+        "difficulty": "hard",
+        "content": "L'oiseau vole près de l'arbre vert."
     },
     {
         "id": "fr11",
         "language": "fr",
-        "level": "2",
-        "difficulty": "easy",
-        "content": "Le chien aboie près de la porte."
+        "level": "1",
+        "difficulty": "hard",
+        "content": "Ma mère prépare le petit déjeuner."
     },
     {
         "id": "fr12",
         "language": "fr",
-        "level": "2",
-        "difficulty": "easy",
-        "content": "La lune éclaire la nuit."
+        "level": "1",
+        "difficulty": "hard",
+        "content": "Les enfants courent dans la cour."
     },
     {
         "id": "fr13",
         "language": "fr",
         "level": "2",
-        "difficulty": "medium",
-        "content": "Le marché de Marrakech est coloré."
+        "difficulty": "easy",
+        "content": "Hier, j'ai mangé au restaurant."
     },
     {
         "id": "fr14",
         "language": "fr",
         "level": "2",
-        "difficulty": "medium",
-        "content": "La fille dessine un beau soleil."
+        "difficulty": "easy",
+        "content": "Elle va faire ses devoirs."
     },
     {
         "id": "fr15",
         "language": "fr",
         "level": "2",
-        "difficulty": "medium",
-        "content": "Le cheval galope dans le champ."
+        "difficulty": "easy",
+        "content": "Nous avons visité le musée."
     },
     {
         "id": "fr16",
         "language": "fr",
         "level": "2",
-        "difficulty": "hard",
-        "content": "Les vagues frappent les rochers de la côte."
+        "difficulty": "easy",
+        "content": "Il pleut beaucoup aujourd'hui."
     },
     {
         "id": "fr17",
         "language": "fr",
         "level": "2",
-        "difficulty": "hard",
-        "content": "Le marchand vend des épices au souk."
+        "difficulty": "medium",
+        "content": "Les enfants jouent ensemble dans le parc."
     },
     {
         "id": "fr18",
         "language": "fr",
         "level": "2",
-        "difficulty": "hard",
-        "content": "La vieille médina est pleine de secrets."
+        "difficulty": "medium",
+        "content": "Ma grand-mère raconte des histoires intéressantes."
     },
     {
         "id": "fr19",
         "language": "fr",
-        "level": "3",
-        "difficulty": "easy",
-        "content": "Le garçon lit un livre intéressant."
+        "level": "2",
+        "difficulty": "medium",
+        "content": "Le marché de Marrakech est très coloré."
     },
     {
         "id": "fr20",
         "language": "fr",
-        "level": "3",
-        "difficulty": "easy",
-        "content": "Les étoiles brillent dans le ciel."
+        "level": "2",
+        "difficulty": "medium",
+        "content": "Pendant les vacances, nous irons à la plage."
     },
     {
         "id": "fr21",
         "language": "fr",
-        "level": "3",
-        "difficulty": "easy",
-        "content": "Le chat grimpe sur le mur."
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Quand il faisait beau, nous sortions souvent."
     },
     {
         "id": "fr22",
         "language": "fr",
-        "level": "3",
-        "difficulty": "medium",
-        "content": "Les palmiers se dressent dans le désert."
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Le marchand vend des épices parfumées au souk."
     },
     {
         "id": "fr23",
         "language": "fr",
-        "level": "3",
-        "difficulty": "medium",
-        "content": "La famille mange un tajine délicieux."
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Si tu étudies bien, tu réussiras tes examens."
     },
     {
         "id": "fr24",
         "language": "fr",
         "level": "3",
-        "difficulty": "medium",
-        "content": "L’enfant écrit une lettre à son ami."
+        "difficulty": "easy",
+        "content": "Bien que ce soit difficile, elle persévère."
     },
     {
         "id": "fr25",
         "language": "fr",
         "level": "3",
-        "difficulty": "hard",
-        "content": "Le dromadaire marche lentement dans le Sahara."
+        "difficulty": "easy",
+        "content": "Il faut que nous partions avant midi."
     },
     {
         "id": "fr26",
         "language": "fr",
         "level": "3",
-        "difficulty": "hard",
-        "content": "La place Jemaa el-Fna est très animée."
+        "difficulty": "easy",
+        "content": "Après avoir fini ses études, il a trouvé un travail."
     },
     {
         "id": "fr27",
         "language": "fr",
         "level": "3",
-        "difficulty": "hard",
-        "content": "Les artisans fabriquent des tapis colorés."
+        "difficulty": "medium",
+        "content": "Les palmiers se dressent majestueusement dans le désert."
     },
     {
         "id": "fr28",
         "language": "fr",
-        "level": "4",
-        "difficulty": "easy",
-        "content": "L’école organise une sortie au parc."
+        "level": "3",
+        "difficulty": "medium",
+        "content": "Pourvu qu'il ne pleuve pas pendant notre pique-nique !"
     },
     {
         "id": "fr29",
         "language": "fr",
-        "level": "4",
-        "difficulty": "easy",
-        "content": "Le garçon joue au football avec ses amis."
+        "level": "3",
+        "difficulty": "medium",
+        "content": "La famille mange un tajine délicieux préparé avec soin."
     },
     {
         "id": "fr30",
         "language": "fr",
-        "level": "4",
-        "difficulty": "easy",
-        "content": "La rivière coule doucement près du village."
+        "level": "3",
+        "difficulty": "medium",
+        "content": "En étudiant régulièrement, on progresse rapidement."
     },
     {
         "id": "fr31",
         "language": "fr",
-        "level": "4",
-        "difficulty": "medium",
-        "content": "Les montagnes de l’Atlas sont magnifiques."
+        "level": "3",
+        "difficulty": "hard",
+        "content": "Le dromadaire, habitué aux conditions extrêmes, marche lentement dans le Sahara."
     },
     {
         "id": "fr32",
         "language": "fr",
-        "level": "4",
-        "difficulty": "medium",
-        "content": "La fille apprend à jouer du luth."
+        "level": "3",
+        "difficulty": "hard",
+        "content": "Quoi que tu dises, je maintiens ma position sur ce sujet."
     },
     {
         "id": "fr33",
         "language": "fr",
-        "level": "4",
-        "difficulty": "medium",
-        "content": "Le marché vend des fruits frais."
+        "level": "3",
+        "difficulty": "hard",
+        "content": "La place Jemaa el-Fna, cœur battant de Marrakech, est très animée."
     },
     {
         "id": "fr34",
         "language": "fr",
         "level": "4",
-        "difficulty": "hard",
-        "content": "Les traditions marocaines sont riches et variées."
+        "difficulty": "easy",
+        "content": "L'école organise une sortie pédagogique au parc naturel."
     },
     {
         "id": "fr35",
         "language": "fr",
         "level": "4",
-        "difficulty": "hard",
-        "content": "Le festival de Fès célèbre la musique sacrée."
+        "difficulty": "easy",
+        "content": "Malgré la pluie, les enfants continuent à jouer dehors."
     },
     {
         "id": "fr36",
         "language": "fr",
         "level": "4",
-        "difficulty": "hard",
-        "content": "Les kasbahs du sud sont des trésors historiques."
+        "difficulty": "easy",
+        "content": "Il est probable que nous déménagions l'année prochaine."
     },
     {
         "id": "fr37",
         "language": "fr",
-        "level": "5",
-        "difficulty": "easy",
-        "content": "Les enfants visitent un musée local."
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Les montagnes de l'Atlas, couvertes de neige, sont magnifiques."
     },
     {
         "id": "fr38",
         "language": "fr",
-        "level": "5",
-        "difficulty": "easy",
-        "content": "Le vent souffle fort dans les dunes."
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Ayant terminé son travail, elle peut enfin se reposer."
     },
     {
         "id": "fr39",
         "language": "fr",
-        "level": "5",
-        "difficulty": "easy",
-        "content": "La fille lit une histoire drôle."
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Il semblerait que les résultats soient meilleurs que prévu."
     },
     {
         "id": "fr40",
         "language": "fr",
-        "level": "5",
+        "level": "4",
         "difficulty": "medium",
-        "content": "Le Maroc est connu pour ses souks animés."
+        "content": "Le marché, bondé de monde, vend des fruits frais."
     },
     {
         "id": "fr41",
         "language": "fr",
-        "level": "5",
-        "difficulty": "medium",
-        "content": "Les élèves étudient l’histoire du Maroc."
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Les traditions marocaines, transmises de génération en génération, sont riches et variées."
     },
     {
         "id": "fr42",
         "language": "fr",
-        "level": "5",
-        "difficulty": "medium",
-        "content": "La médina de Rabat est très ancienne."
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Le festival de Fès, événement culturel majeur, célèbre la musique sacrée."
     },
     {
         "id": "fr43",
         "language": "fr",
-        "level": "5",
+        "level": "4",
         "difficulty": "hard",
-        "content": "Les manuscrits anciens racontent des histoires fascinantes."
+        "content": "Bien qu'elle soit fatiguée, elle refuse de s'arrêter avant d'avoir terminé."
     },
     {
         "id": "fr44",
         "language": "fr",
         "level": "5",
-        "difficulty": "hard",
-        "content": "Les jardins de la Ménara sont un lieu de paix."
+        "difficulty": "easy",
+        "content": "Les élèves, conscients de l'importance de l'éducation, étudient assidûment."
     },
     {
         "id": "fr45",
         "language": "fr",
         "level": "5",
-        "difficulty": "hard",
-        "content": "La culture marocaine mêle tradition et modernité."
+        "difficulty": "easy",
+        "content": "Il aurait fallu qu'il prévienne plus tôt de son absence."
     },
     {
         "id": "fr46",
         "language": "fr",
-        "level": "6",
+        "level": "5",
         "difficulty": "easy",
-        "content": "Les élèves préparent un spectacle à l’école."
+        "content": "Quiconque souhaite participer doit s'inscrire avant vendredi."
     },
     {
         "id": "fr47",
         "language": "fr",
-        "level": "6",
-        "difficulty": "easy",
-        "content": "Le garçon regarde les étoiles la nuit."
+        "level": "5",
+        "difficulty": "medium",
+        "content": "Le Maroc, carrefour des civilisations, est connu pour ses souks animés."
     },
     {
         "id": "fr48",
         "language": "fr",
-        "level": "6",
-        "difficulty": "easy",
-        "content": "La plage d’Agadir est très belle."
+        "level": "5",
+        "difficulty": "medium",
+        "content": "Les élèves, ayant approfondi leurs connaissances, étudient l'histoire complexe du Maroc."
     },
     {
         "id": "fr49",
         "language": "fr",
-        "level": "6",
+        "level": "5",
         "difficulty": "medium",
-        "content": "Les artisans de Fès créent des poteries uniques."
+        "content": "La médina de Rabat, inscrite au patrimoine mondial, est très ancienne."
     },
     {
         "id": "fr50",
         "language": "fr",
-        "level": "6",
-        "difficulty": "medium",
-        "content": "Le Maroc célèbre ses fêtes avec joie."
+        "level": "5",
+        "difficulty": "hard",
+        "content": "Les manuscrits anciens, véritables témoins du passé, racontent des histoires fascinantes."
     },
     {
         "id": "fr51",
         "language": "fr",
-        "level": "6",
-        "difficulty": "medium",
-        "content": "Les enfants apprennent les danses traditionnelles."
+        "level": "5",
+        "difficulty": "hard",
+        "content": "Les jardins de la Ménara, conçus selon les principes de l'art islamique, sont un lieu de paix."
     },
     {
         "id": "fr52",
         "language": "fr",
-        "level": "6",
+        "level": "5",
         "difficulty": "hard",
-        "content": "La bibliothèque municipale conserve des livres précieux."
+        "content": "La culture marocaine, synthèse harmonieuse, mêle habilement tradition et modernité."
     },
     {
         "id": "fr53",
         "language": "fr",
         "level": "6",
-        "difficulty": "hard",
-        "content": "Les dynasties marocaines ont laissé un héritage culturel."
+        "difficulty": "easy",
+        "content": "Les élèves préparent méticuleusement un spectacle avant-gardiste à l'école."
     },
     {
         "id": "fr54",
         "language": "fr",
         "level": "6",
+        "difficulty": "easy",
+        "content": "Il se peut que les négociations aboutissent à un accord satisfaisant."
+    },
+    {
+        "id": "fr55",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "easy",
+        "content": "Quand bien même il pleuvrait, nous maintiendrions notre sortie."
+    },
+    {
+        "id": "fr56",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Les artisans de Fès, héritiers d'un savoir-faire ancestral, créent des poteries uniques."
+    },
+    {
+        "id": "fr57",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Le Maroc, pays aux multiples facettes, célèbre ses fêtes avec une joie communicative."
+    },
+    {
+        "id": "fr58",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "Les enfants, soucieux de préserver leur patrimoine, apprennent les danses traditionnelles."
+    },
+    {
+        "id": "fr59",
+        "language": "fr",
+        "level": "6",
         "difficulty": "hard",
-        "content": "Les contes amazighs inspirent les jeunes générations."
+        "content": "La bibliothèque municipale, véritable sanctuaire du savoir, conserve des livres précieux."
+    },
+    {
+        "id": "fr60",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "Les dynasties marocaines successives ont légué un héritage culturel d'une richesse inestimable."
+    },
+    {
+        "id": "fr61",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "Les contes amazighs, transmis oralement depuis des siècles, continuent d'inspirer les jeunes générations."
+    },
+    {
+        "id": "fr62",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "easy",
+        "content": "Elle boit de l'eau."
+    },
+    {
+        "id": "fr63",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "easy",
+        "content": "Le pain est chaud."
+    },
+    {
+        "id": "fr64",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "medium",
+        "content": "Papa travaille dans le bureau."
+    },
+    {
+        "id": "fr65",
+        "language": "fr",
+        "level": "1",
+        "difficulty": "hard",
+        "content": "La petite fille dessine avec ses crayons."
+    },
+    {
+        "id": "fr66",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "easy",
+        "content": "Demain, nous visiterons la ville."
+    },
+    {
+        "id": "fr67",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "medium",
+        "content": "Le professeur explique la leçon clairement."
+    },
+    {
+        "id": "fr68",
+        "language": "fr",
+        "level": "2",
+        "difficulty": "hard",
+        "content": "Pendant que tu dormais, j'ai préparé le dîner."
+    },
+    {
+        "id": "fr69",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "easy",
+        "content": "Il est essentiel que vous compreniez cette règle."
+    },
+    {
+        "id": "fr70",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "medium",
+        "content": "En dépit des obstacles, elle a atteint son objectif."
+    },
+    {
+        "id": "fr71",
+        "language": "fr",
+        "level": "3",
+        "difficulty": "hard",
+        "content": "Où que vous alliez, vous trouverez toujours de l'aide."
+    },
+    {
+        "id": "fr72",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "easy",
+        "content": "Il est fort probable que cette théorie soit correcte."
+    },
+    {
+        "id": "fr73",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "medium",
+        "content": "Les scientifiques, ayant analysé les données, présentent leurs conclusions."
+    },
+    {
+        "id": "fr74",
+        "language": "fr",
+        "level": "4",
+        "difficulty": "hard",
+        "content": "Nonobstant les difficultés rencontrées, le projet avance conformément au planning."
+    },
+    {
+        "id": "fr75",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "easy",
+        "content": "Il eût été préférable qu'il consultât un spécialiste."
+    },
+    {
+        "id": "fr76",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "medium",
+        "content": "L'architecte, soucieux de durabilité, conçoit des bâtiments écologiques."
+    },
+    {
+        "id": "fr77",
+        "language": "fr",
+        "level": "5",
+        "difficulty": "hard",
+        "content": "Les chercheurs, confrontés à des phénomènes inexpliqués, remettent en question leurs hypothèses."
+    },
+    {
+        "id": "fr78",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "easy",
+        "content": "Le gouvernement envisage de légiférer sur cette question controversée."
+    },
+    {
+        "id": "fr79",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "medium",
+        "content": "L'économiste, analysant les fluctuations du marché, préconise une approche prudente."
+    },
+    {
+        "id": "fr80",
+        "language": "fr",
+        "level": "6",
+        "difficulty": "hard",
+        "content": "Les philosophes contemporains, s'interrogeant sur l'éthique de l'intelligence artificielle, soulèvent des questions fondamentales."
     }
 ]
