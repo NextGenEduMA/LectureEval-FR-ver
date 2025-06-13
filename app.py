@@ -28,28 +28,30 @@ from dotenv import load_dotenv
 load_dotenv()
 hf_token = os.getenv('HF_TOKEN')
 gemini_api_key = os.getenv('GEMINI_API_KEY')
+mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017')  # Default to local MongoDB
 
 app = Flask(__name__)
 
 # Configuration
 UPLOAD_FOLDER = 'Uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-TEXT_DB_PATH = 'texts/texts.json'
 AUDIO_OUTPUT_FOLDER = 'static/audio'
 REFERENCE_AUDIO = 'reference_audio'
 os.makedirs(AUDIO_OUTPUT_FOLDER, exist_ok=True)
 os.makedirs(REFERENCE_AUDIO, exist_ok=True)
-MAX_AUDIO_DURATION = 15  # seconds
+MAX_AUDIO_DURATION = 60  # seconds
 MIN_SNR = 10  # dB
 MIN_SAMPLE_RATE = 16000  # Hz
 
-# Load text database
+# MongoDB setup
 try:
-    with open(TEXT_DB_PATH, 'r', encoding='utf-8') as f:
-        text_db = json.load(f)
-    logger.info("Text database loaded successfully")
+    client = pymongo.MongoClient(mongo_uri)
+    db = client['language_learning']  # Database name
+    text_collection = db['texts']  # Collection name
+    client.server_info()  # Test connection
+    logger.info("Connected to MongoDB successfully")
 except Exception as e:
-    logger.error(f"Failed to load text database: {e}")
+    logger.error(f"Failed to connect to MongoDB: {e}")
     raise
 
 # Initialize RAG retriever
@@ -131,10 +133,9 @@ try:
         tokenizer=processor.tokenizer,
         feature_extractor=processor.feature_extractor,
         device=device,
-        generate_kwargs={"num_beams": 1, "max_new_tokens": 50}
+        generate_kwargs={"num_beams": 1, "max_new_tokens": 200}
     )
     asr_pipeline.model.config.forced_decoder_ids = asr_pipeline.tokenizer.get_decoder_prompt_ids(language="fr", task="transcribe")
-    # Set pad_token_id to avoid attention mask warning
     if asr_pipeline.tokenizer.pad_token_id is None:
         asr_pipeline.tokenizer.pad_token_id = asr_pipeline.tokenizer.eos_token_id
     logger.info("Whisper model loaded successfully")
@@ -205,6 +206,7 @@ def compare_pronunciation(reference_mfccs, user_mfccs, ref_duration, ref_words):
     except Exception as e:
         logger.error(f"Error comparing pronunciation: {e}")
         raise
+
 def evaluate_text_accuracy(reference_text, transcribed_text, result):
     try:
         start_time = time.time()
@@ -217,16 +219,13 @@ def evaluate_text_accuracy(reference_text, transcribed_text, result):
         result['cer_accuracy'] = round(100 * (1 - cer_score), 2)
         word_errors = {'missed': [], 'extra': [], 'substituted': []}
         
-        # Manual comparison if transcription and reference are different
         if ref != trans:
-            # Use jiwer for detailed error analysis
             try:
                 measures = compute_measures(ref, trans)
                 logger.info(f"jiwer measures: {measures}")
                 ref_words = ref.split()
                 trans_words = trans.split()
                 
-                # Process operations from jiwer
                 for chunk in measures['ops']:
                     chunk_type = chunk.type
                     if chunk_type == 'insert':
@@ -245,41 +244,27 @@ def evaluate_text_accuracy(reference_text, transcribed_text, result):
                         for ref_w, hyp_w in zip(ref_words[ref_start:ref_end], trans_words[hyp_start:hyp_end]):
                             word_errors['substituted'].append(f"{ref_w} → {hyp_w}")
                 
-                # If no errors were detected but texts differ, do a simple word-by-word comparison
                 if not word_errors['missed'] and not word_errors['extra'] and not word_errors['substituted']:
                     ref_words = ref.split()
                     trans_words = trans.split()
-                    
-                    # Find substitutions
                     min_len = min(len(ref_words), len(trans_words))
                     for i in range(min_len):
                         if ref_words[i] != trans_words[i]:
                             word_errors['substituted'].append(f"{ref_words[i]} → {trans_words[i]}")
-                    
-                    # Find missing words
                     if len(ref_words) > len(trans_words):
                         word_errors['missed'].extend(ref_words[len(trans_words):])
-                    
-                    # Find extra words
                     if len(trans_words) > len(ref_words):
                         word_errors['extra'].extend(trans_words[len(ref_words):])
             except Exception as e:
                 logger.warning(f"Failed to compute word errors with jiwer: {e}")
-                # Fallback to simple comparison
                 ref_words = ref.split()
                 trans_words = trans.split()
-                
-                # Find substitutions, missing and extra words
                 min_len = min(len(ref_words), len(trans_words))
                 for i in range(min_len):
                     if ref_words[i] != trans_words[i]:
                         word_errors['substituted'].append(f"{ref_words[i]} → {trans_words[i]}")
-                
-                # Find missing words
                 if len(ref_words) > len(trans_words):
                     word_errors['missed'].extend(ref_words[len(trans_words):])
-                
-                # Find extra words
                 if len(trans_words) > len(ref_words):
                     word_errors['extra'].extend(trans_words[len(ref_words):])
         
@@ -291,6 +276,7 @@ def evaluate_text_accuracy(reference_text, transcribed_text, result):
         result['wer_accuracy'] = 80
         result['cer_accuracy'] = 80
         result['word_errors'] = {'missed': [], 'extra': [], 'substituted': []}
+
 def get_speed_score(words_per_minute, tempo):
     if words_per_minute > 180 or tempo > 120:
         return 60  # Too fast
@@ -305,42 +291,29 @@ def generate_grok_feedback(pronunciation_score, text_accuracy, words_per_minute,
             logger.warning("GEMINI_API_KEY not set, using fallback feedback")
             return generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, word_errors)
 
-        # Compare transcription and reference directly to identify differences
         ref_words = reference_text.lower().strip().split()
         trans_words = transcription.lower().strip().split()
-        
-        # Use the word errors from the evaluation
         missed_words = word_errors.get('missed', [])
         extra_words = word_errors.get('extra', [])
         substituted_words = word_errors.get('substituted', [])
         
-        # If no errors were detected but texts differ, do a direct comparison
         if not missed_words and not extra_words and not substituted_words and reference_text.lower().strip() != transcription.lower().strip():
-            # Find differences between reference and transcription
-            diff_analysis = []
             min_len = min(len(ref_words), len(trans_words))
-            
             for i in range(min_len):
                 if ref_words[i] != trans_words[i]:
                     substituted_words.append(f"{ref_words[i]} → {trans_words[i]}")
-            
-            # Check for missing words
             if len(ref_words) > len(trans_words):
                 missed_words.extend(ref_words[len(trans_words):])
-            
-            # Check for extra words
             if len(trans_words) > len(ref_words):
                 extra_words.extend(trans_words[len(ref_words):])
         
         mispronounced = [f"'{e['word']}' à {e['time']}s" for e in pronunciation_errors]
         quality_messages = quality_info.get('messages', ['Qualité audio non évaluée'])
 
-        # Build RAG query
         error_context = f"Errors: missed={', '.join(missed_words) or 'none'}; extra={', '.join(extra_words) or 'none'}; substituted={', '.join(substituted_words) or 'none'}; mispronounced={', '.join(mispronounced) or 'none'}; pronunciation_score={pronunciation_score}; reading_speed={words_per_minute}"
         retrieved_docs = rag_retriever.retrieve(error_context, level, n_results=2)
         retrieved_context = "\n".join([f"- {doc}" for doc in retrieved_docs]) if retrieved_docs else "Aucune astuce disponible."
 
-        # Log the detected errors for debugging
         logger.info(f"Gemini feedback - Detected errors: missed={missed_words}, extra={extra_words}, substituted={substituted_words}")
 
         prompt = """
@@ -392,7 +365,7 @@ Contexte:
                 "parts": [{"text": prompt}]
             }],
             "generationConfig": {
-                "maxOutputTokens": 300,  # Increased for complete feedback
+                "maxOutputTokens": 300,
                 "temperature": 0.7,
                 "topP": 0.9
             }
@@ -421,50 +394,38 @@ Contexte:
     except Exception as e:
         logger.error(f"Error generating Gemini feedback: {e}")
         return generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, word_errors)
+
 def generate_llama_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, transcription, reference_text, quality_info, word_errors, level):
     try:
         if not llm_model or not llm_tokenizer:
             logger.warning("LLaMA model not loaded, using fallback feedback")
             return generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, word_errors)
 
-        # Compare transcription and reference directly to identify differences
         ref_words = reference_text.lower().strip().split()
         trans_words = transcription.lower().strip().split()
-        
-        # Use the word errors from the evaluation
         missed_words = word_errors.get('missed', [])
         extra_words = word_errors.get('extra', [])
         substituted_words = word_errors.get('substituted', [])
         
-        # If no errors were detected but texts differ, do a direct comparison
         if not missed_words and not extra_words and not substituted_words and reference_text.lower().strip() != transcription.lower().strip():
-            # Find differences between reference and transcription
             min_len = min(len(ref_words), len(trans_words))
-            
             for i in range(min_len):
                 if ref_words[i] != trans_words[i]:
                     substituted_words.append(f"{ref_words[i]} → {trans_words[i]}")
-            
-            # Check for missing words
             if len(ref_words) > len(trans_words):
                 missed_words.extend(ref_words[len(trans_words):])
-            
-            # Check for extra words
             if len(trans_words) > len(ref_words):
                 extra_words.extend(trans_words[len(ref_words):])
         
         mispronounced = [f"'{e['word']}' à {e['time']}s" for e in pronunciation_errors]
         quality_messages = quality_info.get('messages', ['Qualité audio non évaluée'])
 
-        # Build RAG query
         error_context = f"Errors: missed={', '.join(missed_words) or 'none'}; extra={', '.join(extra_words) or 'none'}; substituted={', '.join(substituted_words) or 'none'}; mispronounced={', '.join(mispronounced) or 'none'}; pronunciation_score={pronunciation_score}; reading_speed={words_per_minute}"
         retrieved_docs = rag_retriever.retrieve(error_context, level, n_results=2)
         retrieved_context = "\n".join([f"- {doc}" for doc in retrieved_docs]) if retrieved_docs else "Aucune astuce disponible."
 
-        # Log the detected errors for debugging
         logger.info(f"LLaMA feedback - Detected errors: missed={missed_words}, extra={extra_words}, substituted={substituted_words}")
 
-        # Create a simpler, more direct prompt for the distilgpt2 model
         prompt = """
 Feedback de lecture en français pour un élève:
 
@@ -475,8 +436,6 @@ Transcription: "{transcription}"
 
 Bravo pour ton effort! Ta prononciation est {prononciation_qualite}.
 """
-        
-        # Add specific feedback based on errors
         if "élèves," in transcription and "élèves" in reference_text:
             specific_feedback = "Tu as répété 'les élèves' au lieu de dire simplement 'Les élèves préparent un spectacle à l'école'. Essaie de lire le texte une fois avant d'enregistrer."
         elif extra_words:
@@ -488,13 +447,11 @@ Bravo pour ton effort! Ta prononciation est {prononciation_qualite}.
         else:
             specific_feedback = "Continue à pratiquer ta lecture régulièrement."
         
-        # Add quality feedback
         if "trop de bruit" in '; '.join(quality_messages):
             quality_feedback = "Essaie d'enregistrer dans un endroit plus calme."
         else:
             quality_feedback = "La qualité audio est bonne."
         
-        # Determine pronunciation quality
         if pronunciation_score >= 80:
             prononciation_qualite = "excellente"
         elif pronunciation_score >= 60:
@@ -502,7 +459,6 @@ Bravo pour ton effort! Ta prononciation est {prononciation_qualite}.
         else:
             prononciation_qualite = "à améliorer"
         
-        # Format the prompt with all values
         prompt = prompt.format(
             pronunciation_score=pronunciation_score,
             words_per_minute=round(words_per_minute, 1),
@@ -511,7 +467,6 @@ Bravo pour ton effort! Ta prononciation est {prononciation_qualite}.
             prononciation_qualite=prononciation_qualite
         )
         
-        # Create the complete feedback
         complete_feedback = f"Bravo pour ton effort! Ta prononciation est {prononciation_qualite} ({pronunciation_score}/100) et ta vitesse de lecture est bonne ({round(words_per_minute, 1)} mots/min). {specific_feedback} {quality_feedback}"
         
         logger.info(f"Generated feedback: {complete_feedback}")
@@ -528,6 +483,7 @@ Bravo pour ton effort! Ta prononciation est {prononciation_qualite}.
     except Exception as e:
         logger.error(f"Error generating LLaMA feedback: {e}")
         return generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, word_errors)
+
 def generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, word_errors):
     feedback = ["Super effort !"]
     error_details = {
@@ -537,7 +493,6 @@ def generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_min
         'substituted': word_errors.get('substituted', [])[:3]
     }
     
-    # Add pronunciation feedback
     if pronunciation_score >= 80:
         feedback.append("Ta prononciation est très bonne !")
     elif pronunciation_score >= 60:
@@ -545,7 +500,6 @@ def generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_min
     else:
         feedback.append("Pratique encore ta prononciation.")
     
-    # Add detailed error feedback
     if error_details['substituted'] or error_details['extra'] or error_details['missed']:
         if error_details['substituted']:
             substituted = error_details['substituted'][:2]
@@ -554,10 +508,9 @@ def generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_min
             feedback.append(f"Mots en trop: {', '.join(error_details['extra'][:2])}.")
         if error_details['missed']:
             feedback.append(f"Mots manquants: {', '.join(error_details['missed'][:2])}.")
-    else:
-        feedback.append("Pas d'erreurs de mots, bravo !")
+        else:
+            feedback.append("Pas d'erreurs de mots, bravo !")
     
-    # Add speed feedback
     if words_per_minute > 180:
         feedback.append("Ralentis un peu pour mieux articuler.")
     elif words_per_minute < 80:
@@ -565,7 +518,6 @@ def generate_fallback_feedback(pronunciation_score, text_accuracy, words_per_min
     else:
         feedback.append("Bonne vitesse de lecture !")
     
-    # Add audio quality feedback
     feedback.append("Conseil: enregistre dans un endroit calme pour une meilleure évaluation.")
     
     feedback_text = ' '.join(feedback)
@@ -584,10 +536,11 @@ def get_random_text():
         language = request.args.get('language', 'fr')
         level = request.args.get('level', '6')
         difficulty = request.args.get('difficulty', 'medium')
-        matching_texts = [
-            text for text in text_db
-            if text['language'] == language and text['level'] == level and text['difficulty'] == difficulty
-        ]
+        matching_texts = list(text_collection.find({
+            'language': language,
+            'level': level,
+            'difficulty': difficulty
+        }))
         if not matching_texts:
             return jsonify({'status': 'error', 'message': 'Aucun texte disponible.'})
         selected_text = np.random.choice(matching_texts)
@@ -603,7 +556,7 @@ def get_random_text():
             }
         })
     except Exception as e:
-        logger.error(f"Error getting random text: {e}")
+        logger.error(f"Error getting random text from MongoDB: {e}")
         return jsonify({'status': 'error', 'message': str(e)})
 
 @app.route('/text-to-speech', methods=['POST'])
@@ -679,27 +632,19 @@ def evaluate():
         cer_accuracy = result.get('cer_accuracy', 80)
         word_errors = result.get('word_errors', {'missed': [], 'extra': [], 'substituted': []})
         
-        # Manual comparison if no errors detected but texts differ
         if (not word_errors['missed'] and not word_errors['extra'] and not word_errors['substituted'] and 
             reference_text.lower().strip() != transcription.lower().strip()):
             logger.info("No errors detected by jiwer but texts differ, performing manual comparison")
             ref_words = reference_text.lower().strip().split()
             trans_words = transcription.lower().strip().split()
-            
-            # Find substitutions
             min_len = min(len(ref_words), len(trans_words))
             for i in range(min_len):
                 if ref_words[i] != trans_words[i]:
                     word_errors['substituted'].append(f"{ref_words[i]} → {trans_words[i]}")
-            
-            # Find missing words
             if len(ref_words) > len(trans_words):
                 word_errors['missed'].extend(ref_words[len(trans_words):])
-            
-            # Find extra words
             if len(trans_words) > len(ref_words):
                 word_errors['extra'].extend(trans_words[len(ref_words):])
-            
             logger.info(f"Manual comparison found: missed={word_errors['missed']}, extra={word_errors['extra']}, substituted={word_errors['substituted']}")
         
         word_count = len(reference_text.split())
@@ -708,7 +653,6 @@ def evaluate():
         logger.info(f"Words per minute: {words_per_minute:.2f}")
         speed_score = get_speed_score(words_per_minute, audio_features['tempo'])
         
-        # Generate feedback with the updated word errors
         gemini_feedback = generate_grok_feedback(
             pronunciation_score, text_accuracy, words_per_minute, pronunciation_errors, 
             transcription, reference_text, quality_info, word_errors, level
@@ -756,9 +700,10 @@ def evaluate():
 @app.route('/list_texts')
 def list_texts():
     try:
-        return jsonify({'status': 'success', 'texts': text_db})
+        texts = list(text_collection.find({}, {'_id': 0}))  # Exclude MongoDB _id field
+        return jsonify({'status': 'success', 'texts': texts})
     except Exception as e:
-        logger.error(f"Error listing texts: {e}")
+        logger.error(f"Error listing texts from MongoDB: {e}")
         return jsonify({'status': 'error', 'message': str(e)})
 
 if __name__ == '__main__':

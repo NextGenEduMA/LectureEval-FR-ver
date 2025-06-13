@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,25 +14,6 @@
             border-radius: 8px;
             margin-top: 1rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .error-list {
-            margin-top: 1rem;
-            padding-left: 1.5rem;
-            display: none;
-        }
-        .error-list.show {
-            display: block;
-        }
-        .error-toggle {
-            cursor: pointer;
-            color: #007bff;
-            text-decoration: underline;
-            margin-top: 0.5rem;
-            display: inline-block;
-        }
-        .error-item {
-            font-weight: bold;
-            color: #dc3545;
         }
         .loading {
             border: 4px solid #f3f3f3;
@@ -450,9 +430,9 @@
                         setTimeout(() => {
                             if (isRecording) {
                                 stopRecording();
-                                audioStatus.textContent = 'Enregistrement arrêté (limite de 15s atteinte).';
+                                audioStatus.textContent = 'Enregistrement arrêté (limite de 120s atteinte).';
                             }
-                        }, 15000);
+                        }, 120000);
                     })
                     .catch(error => {
                         console.error('Error accessing microphone:', error);
@@ -511,74 +491,12 @@
                             feedback += '<div class="feedback-section">';
                             feedback += '<h5>Feedback Gemini :</h5>';
                             feedback += `<p>${data.llm_details.gemini_feedback}</p>`;
-                            const gemini_errors = data.llm_details.gemini_errors;
-                            if (gemini_errors.mispronounced.length || gemini_errors.missed.length || gemini_errors.extra.length) {
-                                feedback += '<span class="error-toggle">Afficher les détails des erreurs (Gemini)</span>';
-                                feedback += '<div class="error-list">';
-                                if (gemini_errors.mispronounced.length) {
-                                    feedback += '<p><strong>Mots mal prononcés :</strong></p><ul>';
-                                    gemini_errors.mispronounced.forEach(err => {
-                                        feedback += `<li class="error-item">${err}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                if (gemini_errors.missed.length) {
-                                    feedback += '<p><strong>Mots manquants :</strong></p><ul>';
-                                    gemini_errors.missed.forEach(word => {
-                                        feedback += `<li class="error-item">${word}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                if (gemini_errors.extra.length) {
-                                    feedback += '<p><strong>Mots supplémentaires :</strong></p><ul>';
-                                    gemini_errors.extra.forEach(word => {
-                                        feedback += `<li class="error-item">${word}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                feedback += '</div>';
-                            }
                             feedback += '</div>';
                             feedback += '<div class="feedback-section">';
                             feedback += '<h5>Feedback LLaMA :</h5>';
                             feedback += `<p>${data.llm_details.llama_feedback}</p>`;
-                            const llama_errors = data.llm_details.llama_errors;
-                            if (llama_errors.mispronounced.length || llama_errors.missed.length || llama_errors.extra.length) {
-                                feedback += '<span class="error-toggle">Afficher les détails des erreurs (LLaMA)</span>';
-                                feedback += '<div class="error-list">';
-                                if (llama_errors.mispronounced.length) {
-                                    feedback += '<p><strong>Mots mal prononcés :</strong></p><ul>';
-                                    llama_errors.mispronounced.forEach(err => {
-                                        feedback += `<li class="error-item">${err}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                if (llama_errors.missed.length) {
-                                    feedback += '<p><strong>Mots manquants :</strong></p><ul>';
-                                    llama_errors.missed.forEach(word => {
-                                        feedback += `<li class="error-item">${word}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                if (llama_errors.extra.length) {
-                                    feedback += '<p><strong>Mots supplémentaires :</strong></p><ul>';
-                                    llama_errors.extra.forEach(word => {
-                                        feedback += `<li class="error-item">${word}</li>`;
-                                    });
-                                    feedback += '</ul>';
-                                }
-                                feedback += '</div>';
-                            }
                             feedback += '</div>';
                             feedbackContainer.innerHTML = feedback;
-                            const errorToggles = feedbackContainer.querySelectorAll('.error-toggle');
-                            errorToggles.forEach(toggle => {
-                                toggle.addEventListener('click', () => {
-                                    const errorList = toggle.nextElementSibling;
-                                    errorList.classList.toggle('show');
-                                    toggle.textContent = errorList.classList.contains('show') ? 'Masquer les détails des erreurs' : `Afficher les détails des erreurs (${toggle.textContent.includes('Gemini') ? 'Gemini' : 'LLaMA'})`;
-                                });
-                            });
                             if (resultsContainer) {
                                 resultsContainer.style.display = 'block';
                                 resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
