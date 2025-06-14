@@ -97,7 +97,8 @@ This is a Flask-based web application designed to help Moroccan primary school s
 
 ## Architecture
 *Insert your architecture diagram here. Upload an image (e.g., architecture.png) and reference it like this:*
-![System Architecture](LectureEval-FR\FR-EVAL-ARCHITECHTURE.png)
+![System Architecture](LectureEval-FR/FR-EVAL-ARCHITECHTURE.png)
+
 *Description*: The architecture includes a Flask server as the central hub, interacting with a MongoDB database for text storage, an audio processing pipeline (Librosa, Pydub, Soundfile, gTTS), and an AI pipeline (Whisper, Jiwer, FastDTW, Gemini, DistilGPT2). The RAGRetriever enhances feedback, and a file system manages audio files. Users access the system via a web interface.
 
 ## Contributing
